@@ -1,93 +1,99 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
-class complex
+class Complex
 {
-    int real, img;
+    float real, imag; 
 
-    public:
+public:
+    Complex()
+    {
+        real = 0;
+        imag = 0;
+    }
 
-    void accept(int r, int i)
+    Complex(float r, float i)
     {
         real = r;
-        img = i;
+        imag = i;
+    }
+
+    void accept()
+    {
+        cout << "Enter real part: ";
+        cin >> real;
+
+        cout << "Enter imaginary part: ";
+        cin >> imag;
     }
 
     void display()
     {
-        if(img > 0)
-        {
-            cout << real << "+i" << img;
-        }
+        cout << real;
+
+        if (imag >= 0)
+            cout << " + " << imag << "i";
         else
-        {
-            cout << real << "-i" << -img;
-        }
+            cout << " - " << -imag << "i";
+
+        cout << endl;
     }
 
-    complex operator+(complex c)
+    Complex operator+(Complex c)
     {
-        complex sum;
-        sum.real = real + c.real;
-        sum.img = img + c.img;
-        return sum;
+        return Complex(real + c.real, imag + c.imag);
     }
 
-    complex operator-(complex c)
+    Complex operator-(Complex c)
     {
-        complex sub;
-        sub.real = real - c.real;
-        sub.img = img - c.img;
-        return sub;
+        return Complex(real - c.real, imag - c.imag);
     }
 
-    complex operator*(complex c)
+    Complex operator*(Complex c)
     {
-        complex product;
-        product.real = real * c.real - img * c.img;
-        product.img = real * c.img + img * c.real;
-        return product;
+        return Complex(
+            real * c.real - imag * c.imag,
+            real * c.imag + imag * c.real
+        );
     }
 
-    complex operator/(complex c)
+    Complex operator/(Complex c)
     {
-        complex div;
-        int denominator = c.real * c.real + c.img * c.img;
+        float denominator =
+            c.real * c.real + c.imag * c.imag;
 
-        div.real = (real * c.real + img * c.img) / denominator;
-        div.img = (img * c.real - real * c.img) / denominator;
-
-        return div;
+        return Complex(
+            (real * c.real + imag * c.imag) / denominator,
+            (imag * c.real - real * c.imag) / denominator
+        );
     }
 };
 
 int main()
 {
-    complex c1, c2, c3;
+    Complex c1, c2, result; // Calls default constructor for all three
 
-    c1.accept(4,5);
-    cout << "First no. is: ";
-    c1.display();
+    cout << "Enter first complex number:\n";
+    c1.accept();
 
-    c2.accept(2,3);
-    cout << "\nSecond no. is: ";
-    c2.display();
+    cout << "\nEnter second complex number:\n";
+    c2.accept();
 
-    c3 = c1 + c2;
-    cout << "\nAddition is: ";
-    c3.display();
+    result = c1 + c2;
+    cout << "\nAddition: ";
+    result.display();
 
-    c3 = c1 - c2;
-    cout << "\nSubtraction is: ";
-    c3.display();
+    result = c1 - c2;
+    cout << "Subtraction: ";
+    result.display();
 
-    c3 = c1 * c2;
-    cout << "\nMultiplication is: ";
-    c3.display();
+    result = c1 * c2;
+    cout << "Multiplication: ";
+    result.display();
 
-    c3 = c1 / c2;
-    cout << "\nDivision is: ";
-    c3.display();
+    result = c1 / c2;
+    cout << "Division: ";
+    result.display();
 
-    return 0;
+    return 0; 
 }
